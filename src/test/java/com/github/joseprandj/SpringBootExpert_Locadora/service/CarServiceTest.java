@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class CarServiceTest {
@@ -24,14 +24,17 @@ class CarServiceTest {
     @Test
     @DisplayName("Deve salvar um carro")
     void mustSaveCar(){
-        Mockito
-            .when(repository.findById(1L))
-            .thenReturn(Optional.of(new CarEntity("Test Mock", 10, 2026)));
+        CarEntity car = new CarEntity("Sedan", 10, 2027);
+        car.setId(1L);
 
-        Optional<CarEntity> carFound = repository.findById(1L);
-        System.out.println(carFound.get());
+        Mockito.when(repository.save(Mockito.any())).thenReturn(car);
 
+        CarEntity savedCar = service.save(car);
 
+        assertNotNull(savedCar);
+        assertEquals("Sedan", car.getModel());
+
+        Mockito.verify(repository).save(Mockito.any());
     }
 
 }
