@@ -1,6 +1,7 @@
 package com.github.joseprandj.SpringBootExpert_Locadora.service;
 
 import com.github.joseprandj.SpringBootExpert_Locadora.entity.CarEntity;
+import com.github.joseprandj.SpringBootExpert_Locadora.exception.InvalidReservationException;
 import com.github.joseprandj.SpringBootExpert_Locadora.repository.CarRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,6 +37,22 @@ class CarServiceTest {
         assertEquals("Sedan", car.getModel());
 
         Mockito.verify(repository).save(Mockito.any());
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro caso o valor da diária seja invalido")
+    void mustReturnErrorWhenDiaryValueIsInvalid(){
+        CarEntity car = new CarEntity("Sedan", 0, 2027);
+
+        // JUnit
+        assertThrows(IllegalArgumentException.class, () -> service.save(car));
+
+        // AsserJ
+        Throwable erro = catchThrowable(() -> service.save(car));
+        assertThat(erro)
+            .isInstanceOf(IllegalArgumentException.class);
+
+        Mockito.verify(repository, Mockito.never()).save(Mockito.any());
     }
 
 }
