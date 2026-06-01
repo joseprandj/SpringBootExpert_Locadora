@@ -61,9 +61,11 @@ class CarServiceTest {
     void mustUpdateDataCar(){
         Long id = 1L;
 
+        // Instanciado para passar a verificação do metodo de update
         CarEntity carSaved = new CarEntity("Gol", 80, 2026);
         Mockito.when(repository.findById(id)).thenReturn(Optional.of(carSaved));
 
+        // Instanciado para criação do registro
         CarEntity carUpdate = new CarEntity("Gol", 80, 2026);
         carUpdate.setId(id);
         Mockito.when(repository.save(Mockito.any())).thenReturn(carUpdate);
@@ -71,7 +73,7 @@ class CarServiceTest {
         CarEntity car = new CarEntity("Sedan", 0, 2027);
         CarEntity result = service.update(id, car);
 
-        assertEquals(result.getModel(), "Gol");
+        assertEquals(result.getModel(), "Sedan");
         Mockito.verify(repository).save(Mockito.any());
     }
 
