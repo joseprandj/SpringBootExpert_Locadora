@@ -30,7 +30,7 @@ public class CarService {
 
     public void delete(Long id){
         CarEntity carExits = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Car not found"));
-        repository.deleteById(id);
+        repository.delete(carExits);
     }
 
     public CarEntity getById(Long id){
