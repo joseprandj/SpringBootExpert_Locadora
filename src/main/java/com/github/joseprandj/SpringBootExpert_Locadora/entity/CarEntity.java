@@ -1,6 +1,7 @@
 package com.github.joseprandj.SpringBootExpert_Locadora.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CarEntity {
 
     @Id
@@ -25,4 +27,5 @@ public class CarEntity {
         this.diaryValue = diaryValue;
         this.carYear = carYear;
     }
+
 }
